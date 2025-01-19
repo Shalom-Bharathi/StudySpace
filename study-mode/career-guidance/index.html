@@ -22,7 +22,19 @@
         };
         firebase.initializeApp(firebaseConfig);
     </script>
-    <script src="../../hub/app.js">
+    <script>
+        let API_KEY;
+let thingsRefx;
+let unsubscribex;
+let db = firebase.firestore();
+thingsRefx = db.collection('API');
+
+unsubscribex = thingsRefx.onSnapshot(querySnapshot => {
+  querySnapshot.docs.forEach(doc => {
+    API_KEY = doc.data().API;
+  });
+});
+
     </script>
     <style>
         .fade-up { opacity: 0; transform: translateY(20px); }
