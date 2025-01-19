@@ -1,5 +1,17 @@
 lucide.createIcons();
 
+let API_KEY;
+let thingsRefx;
+let unsubscribex;
+let db = firebase.firestore();
+thingsRefx = db.collection('API');
+
+unsubscribex = thingsRefx.onSnapshot(querySnapshot => {
+  querySnapshot.docs.forEach(doc => {
+    API_KEY = doc.data().API;
+  });
+});
+
 class CareerCompass {
     constructor() {
         this.currentStep = 1;
@@ -216,7 +228,7 @@ class CareerCompass {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer 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`
+                        'Authorization': `Bearer ${API_KEY}`
                     },
                     body: JSON.stringify({
                     model: "gpt-4",

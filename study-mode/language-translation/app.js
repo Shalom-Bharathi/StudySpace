@@ -1,7 +1,18 @@
 // Initialize Lucide icons
 lucide.createIcons();
+let API_KEY;
+let thingsRefx;
+let unsubscribex;
+let db = firebase.firestore();
+thingsRefx = db.collection('API');
 
-const OPENAI_API_KEY = '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';
+unsubscribex = thingsRefx.onSnapshot(querySnapshot => {
+  querySnapshot.docs.forEach(doc => {
+    API_KEY = doc.data().API;
+  });
+});
+    
+
 
 const languages = [
     { code: 'en', name: 'English', voice: 'en-US' },
@@ -138,7 +149,7 @@ Text to translate: ${text}`;
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${OPENAI_API_KEY}`
+                    'Authorization': `Bearer ${API_KEY}`
                 },
                 body: JSON.stringify({
                     model: "gpt-4o-mini",

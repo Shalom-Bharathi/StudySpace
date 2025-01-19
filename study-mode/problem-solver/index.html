@@ -9,6 +9,21 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Tesseract.js for image to text -->
     <script src='https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js'></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+    <script>
+        const firebaseConfig = {
+          apiKey: "AIzaSyBHMmzqD6XT3fzdA9EHsR-GVkbFf1yeSQU",
+          authDomain: "studyspace-22ebd.firebaseapp.com",
+          projectId: "studyspace-22ebd",
+          storageBucket: "studyspace-22ebd.firebasestorage.app",
+          messagingSenderId: "533652320021",
+          appId: "1:533652320021:web:2cfdcb01d7947d8023031c",
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    
     <style>
         .fade-in {
             opacity: 0;
@@ -77,14 +92,13 @@
 
                     <div class="flex items-center justify-center w-full">
                         <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-zinc-300 border-dashed rounded-lg cursor-pointer hover:bg-zinc-50">
-                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                            <div onclick="alert('Feature coming soon...')" class="flex flex-col items-center justify-center pt-5 pb-6">
                                 <i data-lucide="upload" class="w-8 h-8 mb-3 text-zinc-400"></i>
                                 <p class="mb-2 text-sm text-zinc-500">
                                     <span class="font-semibold">Click to upload</span> or drag and drop
                                 </p>
-                                <p class="text-xs text-zinc-500">Image of your problem (optional)</p>
+                                <p class="text-xs text-zinc-500">Feature coming soon...</p>
                             </div>
-                            <input id="problemImage" type="file" class="hidden" accept="image/*" />
                         </label>
                     </div>
 

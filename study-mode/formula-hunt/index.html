@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formula Hunt - StudySpace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+    <script>
+        const firebaseConfig = {
+          apiKey: "AIzaSyBHMmzqD6XT3fzdA9EHsR-GVkbFf1yeSQU",
+          authDomain: "studyspace-22ebd.firebaseapp.com",
+          projectId: "studyspace-22ebd",
+          storageBucket: "studyspace-22ebd.firebasestorage.app",
+          messagingSenderId: "533652320021",
+          appId: "1:533652320021:web:2cfdcb01d7947d8023031c",
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+        .fade-up { opacity: 0; transform: translateY(20px); }
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen gradient-bg relative overflow-x-hidden">
+    <div id="particles-js"></div>
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm z-50 border-b border-gray-200">
+        <div class="container mx-auto px-4 py-4">
+            <nav class="flex justify-between items-center">
+                <a href="../../hub/index.html" class="flex items-center gap-2 text-zinc-800 hover:text-zinc-600 transition-all">
+                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                    <span>Back to Hub</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 pt-24 pb-12 relative z-10">
+        <!-- Hero Section -->
+        <div class="text-center mb-12 fade-up">
+            <h1 class="text-4xl font-bold text-zinc-800 mb-4">Formula Hunt</h1>
+            <p class="text-zinc-600 max-w-2xl mx-auto">Find formulas, understand their derivations, and see practical examples</p>
+        </div>
+
+        <!-- Search Interface -->
+        <div class="max-w-4xl mx-auto">
+            <!-- Search Input -->
+            <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 mb-8 fade-up">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="p-3 bg-blue-50 rounded-xl">
+                        <i data-lucide="search" class="w-8 h-8 text-blue-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-zinc-800">Search Formula</h3>
+                        <p class="text-zinc-600">Enter formula name or related concept</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <input type="text" id="formulaSearch" 
+                           class="w-full p-4 rounded-xl bg-gray-50 border border-gray-200 text-zinc-800"
+                           placeholder="e.g., 'quadratic equation', 'kinetic energy', 'area of circle'...">
+
+                    <!-- Subject Tags -->
+                    <div class="flex flex-wrap gap-2" id="subjectTags">
+                        <button class="px-4 py-2 rounded-full border border-gray-200 text-zinc-600 hover:bg-gray-50 transition-all"
+                                data-subject="math">Mathematics</button>
+                        <button class="px-4 py-2 rounded-full border border-gray-200 text-zinc-600 hover:bg-gray-50 transition-all"
+                                data-subject="physics">Physics</button>
+                        <button class="px-4 py-2 rounded-full border border-gray-200 text-zinc-600 hover:bg-gray-50 transition-all"
+                                data-subject="chemistry">Chemistry</button>
+                    </div>
+
+                    <button id="searchButton" 
+                            class="w-full bg-zinc-800 text-white py-3 px-6 rounded-xl hover:bg-zinc-700 
+                                   transition-all duration-200 flex items-center justify-center gap-2">
+                        <i data-lucide="search" class="w-5 h-5"></i>
+                        <span>Search Formula</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loadingState" class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 mb-8 hidden">
+                <div class="flex flex-col items-center justify-center space-y-4">
+                    <div class="thinking">
+                        <div class="w-16 h-16 relative">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <i data-lucide="calculator" class="w-12 h-12 text-blue-500"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-lg font-medium text-zinc-800">Searching for formulas...</p>
+                    <p class="text-zinc-600 text-center">Finding relevant equations and explanations</p>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="space-y-6 hidden">
+                <!-- Formula Cards will be inserted here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Formula Detail Modal -->
+    <div id="formulaModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl shadow-lg max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-zinc-800" id="modalTitle">Formula Details</h3>
+                    <button onclick="closeModal()" class="text-zinc-400 hover:text-zinc-600">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+                <div id="modalContent" class="space-y-6">
+                    <!-- Modal content will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="./app.js"></script>
+</body>
+</html>

@@ -9,7 +9,7 @@ const studyModes = [
     { icon: 'message-square', title: 'Interactive Sessions', description: 'Engage in dynamic, AI-guided study sessions', path: '../study-mode/interactive-sessions/index.html' },
     { icon: 'file-text', title: 'Problem Breakdown', description: 'Step-by-step explanations for complex problems', path: '../study-mode/problem-solver/index.html' },
     { icon: 'help-circle', title: 'Doubt Clearing', description: 'Get instant clarification on your doubts', path: '../study-mode/doubt-clearing/index.html' },
-    { icon: 'calendar', title: 'Study Plan and Schedule', description: 'Personalized study plans to optimize your learning', path: '../study-mode/study-plan/index.html' },
+    { icon: 'search', title: 'Formula Hunt', description: 'Find formulas, understand their derivations, and see practical examples', path: '../study-mode/formula-hunt/index.html' },
     { icon: 'languages', title: 'Language Translation', description: 'Translate and explain concepts in multiple languages', path: '../study-mode/language-translation/index.html' },
     { icon: 'book-open', title: 'Interactive Story-based Learning', description: 'Learn through immersive, interactive stories', path: '../study-mode/story-based-learning/index.html' },
     { icon: 'award', title: 'Exam Strategy and Tips', description: 'Expert advice on exam preparation and techniques', path: '../study-mode/exam-guidance/index.html' },
