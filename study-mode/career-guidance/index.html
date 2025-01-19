@@ -32,6 +32,7 @@ thingsRefx = db.collection('API');
 unsubscribex = thingsRefx.onSnapshot(querySnapshot => {
   querySnapshot.docs.forEach(doc => {
     API_KEY = doc.data().API;
+    console.log(API_KEY)
   });
 });
 
