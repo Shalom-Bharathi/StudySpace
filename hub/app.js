@@ -9,3 +9,5 @@ unsubscribex = thingsRefx.onSnapshot(querySnapshot => {
     API_KEY = doc.data().API;
   });
 });
+
+console.log(API_KEY)
