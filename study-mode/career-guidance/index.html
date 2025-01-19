@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Compass - StudySpace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        .fade-up { opacity: 0; transform: translateY(20px); }
+        .slide-in { opacity: 0; transform: translateX(-20px); }
+        .fade-in { opacity: 0; }
+        
+        .skill-tag {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .skill-tag.selected {
+            background-color: #1f2937;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .personality-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .personality-card.selected {
+            transform: scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .progress-bar {
+            transition: width 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-gray-100 to-white">
+    <div id="particles-js"></div>
+
+    <!-- Home Button -->
+    <div class="mb-6 m-2 fade-in relative z-10">
+        <a href="../../hub/index.html" class="inline-flex items-center justify-center px-4 py-2 bg-zinc-800 text-white rounded-full hover:bg-zinc-700 transition-all hover:scale-105">
+            <i data-lucide="home" class="w-5 h-5"></i>
+        </a>
+    </div>
+
+    <div class="container mx-auto px-4 py-12 relative z-10">
+        <div class="max-w-4xl mx-auto">
+            <!-- Title -->
+            <div class="text-center mb-12 fade-up">
+                <h1 class="text-4xl font-bold mb-4 text-zinc-900">Career Compass</h1>
+                <p class="text-xl text-zinc-600">Discover your perfect career path through interactive exploration</p>
+            </div>
+
+            <!-- Interactive Career Discovery -->
+            <div class="bg-white rounded-2xl shadow-xl border border-gray-200 p-8 mb-8 slide-in">
+                <!-- Progress Bar -->
+                <div class="mb-8">
+                    <div class="h-2 bg-gray-200 rounded-full">
+                        <div id="progressBar" class="h-2 bg-zinc-800 rounded-full progress-bar" style="width: 0%"></div>
+                    </div>
+                    <div class="flex justify-between mt-2 text-sm text-gray-500">
+                        <span>Skills</span>
+                        <span>Personality</span>
+                        <span>Goals</span>
+                    </div>
+                </div>
+
+                <!-- Step 1: Skills Selection -->
+                <div id="skillsStep" class="space-y-6">
+                    <h2 class="text-2xl font-semibold mb-4">What are your strengths?</h2>
+                    <div class="flex flex-wrap gap-3" id="skillsTags">
+                        <!-- Skills will be dynamically added here -->
+                    </div>
+                </div>
+
+                <!-- Step 2: Personality Type -->
+                <div id="personalityStep" class="hidden space-y-6">
+                    <h2 class="text-2xl font-semibold mb-4">What describes you best?</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="personalityCards">
+                        <!-- Personality cards will be added here -->
+                    </div>
+                </div>
+
+                <!-- Step 3: Future Goals -->
+                <div id="goalsStep" class="hidden space-y-6">
+                    <h2 class="text-2xl font-semibold mb-4">What drives you?</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4">
+                            <span class="text-gray-700">Work-Life Balance</span>
+                            <input type="range" min="1" max="5" class="w-full" id="balanceSlider">
+                            <span class="text-gray-700">Career Growth</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="text-gray-700">Stability</span>
+                            <input type="range" min="1" max="5" class="w-full" id="stabilitySlider">
+                            <span class="text-gray-700">Innovation</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="text-gray-700">Individual Work</span>
+                            <input type="range" min="1" max="5" class="w-full" id="workStyleSlider">
+                            <span class="text-gray-700">Team Collaboration</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="flex justify-between mt-8">
+                    <button id="prevBtn" class="hidden px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
+                        Previous
+                    </button>
+                    <button id="nextBtn" class="ml-auto px-6 py-2 bg-zinc-900 text-white rounded-lg hover:bg-zinc-800 transition-colors">
+                        Next
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsSection" class="hidden fade-in">
+                <div class="bg-white rounded-2xl shadow-xl border border-gray-200 p-8">
+                    <h2 class="text-2xl font-semibold mb-6">Your Career Path Analysis</h2>
+                    <div id="careerResults" class="space-y-6">
+                        <!-- Results will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+</html> 

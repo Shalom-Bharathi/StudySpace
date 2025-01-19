@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudySpace - AI-Powered Learning Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ga+Maamli&family=Playwrite+AU+QLD:wght@100..400&family=Playwrite+PE:wght@100..400&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Press+Start+2P&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Framer Motion Alternative (GSAP) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <!-- Custom Styles -->
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .glow {
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(to right, rgb(219 234 254), rgb(233 213 255), rgb(252 231 243));
+            opacity: 0.7;
+        }
+
+        .dot-pattern {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjZmZmIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiNjY2MiPjwvcmVjdD4KPC9zdmc+');
+            opacity: 0.4;
+        }
+
+        [data-tab-content] {
+            display: none;
+        }
+
+        [data-tab-content].active {
+            display: block;
+        }
+
+        .tab.active {
+            background-color: rgb(24 24 27);
+            color: white;
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+            background: linear-gradient(45deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.05));
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .gradient-text {
+            background: linear-gradient(45deg, #3B82F6, #8B5CF6, #EC4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradient 8s ease infinite;
+            background-size: 300% 300%;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+        }
+
+        section {
+            position: relative;
+            overflow: hidden;
+            background-position: 50% 50%;
+            background-size: cover;
+        }
+
+        .bg-zinc-50 {
+            position: relative;
+        }
+
+        .bg-zinc-50::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.05));
+            pointer-events: none;
+        }
+
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Smooth scrolling for the whole page */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Hide scrollbar but keep functionality */
+        body {
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* IE and Edge */
+        }
+
+        body::-webkit-scrollbar {
+            display: none;
+            /* Chrome, Safari, Opera */
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-white text-zinc-900">
+    <div id="smooth-wrapper">
+        <div id="smooth-content">
+            <!-- Header -->
+            <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-zinc-200">
+                <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
+                    <a href="/" class="text-xl font-semibold relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-zinc-900 after:left-0 after:bottom-0 after:transition-all hover:after:w-full">StudySpace</a>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="#features" class="text-sm relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-zinc-600 after:left-0 after:bottom-0 after:transition-all hover:after:w-full">Features</a>
+                        <a href="#how-it-works" class="text-sm relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-zinc-600 after:left-0 after:bottom-0 after:transition-all hover:after:w-full">How It Works</a>
+                        <a href="#pricing" class="text-sm relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-zinc-600 after:left-0 after:bottom-0 after:transition-all hover:after:w-full">Pricing</a>
+                    </div>
+                    <button class="md:hidden" id="menuButton">
+                        <i data-lucide="menu" class="h-5 w-5"></i>
+                    </button>
+                </nav>
+                <div id="mobileMenu" class="hidden md:hidden bg-white border-b border-zinc-200">
+                    <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                        <a href="#features" class="text-sm relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-zinc-600 after:left-0 after:bottom-0 after:transition-all hover:after:w-full">Features</a>
+                        <a href="#how-it-works" class="text-sm relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-zinc-600 after:left-0 after:bottom-0 after:transition-all hover:after:w-full">How It Works</a>
+                        <a href="#pricing" class="text-sm relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bg-zinc-600 after:left-0 after:bottom-0 after:transition-all hover:after:w-full">Pricing</a>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="pt-16">
+                <!-- Hero Section -->
+                <section
+                    class="hero w-full px-4 py-20 text-center relative overflow-hidden min-h-screen flex items-center justify-center">
+                    <div id="particles-js"></div>
+                    <div class="hero-content relative z-3 w-full" id="heroContent">
+                        <h1 class="text-6xl md:text-7xl font-bold mb-6 color-black">
+                            Revolutionize Your Study Experience
+                        </h1>
+                        <p class="text-xl mb-8 text-zinc-600 max-w-2xl mx-auto floating">
+                            Upload your textbooks. Let AI create personalized study content. Transform the way you
+                            learn.
+                        </p>
+                        <div class="space-y-4">
+                            <a href="./hub/index.html"
+                                class="bg-zinc-900 text-white px-8 py-3 rounded-full text-lg font-medium inline-flex items-center hover:bg-zinc-800 transition-all transform hover:scale-105 hover:shadow-xl">
+                                Start Learning <i data-lucide="arrow-right" class="ml-2 h-5 w-5"></i>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Features Section -->
+                <section id="features" class="bg-gradient-to-b from-white to-zinc-50 py-20">
+                    <div class="container mx-auto px-4 fade-up">
+                        <h2 class="text-3xl font-bold mb-12 text-center">Features</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                            <div
+                                class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
+                                <div class="h-12 w-12 bg-zinc-100 rounded-full flex items-center justify-center mb-4">
+                                    <i data-lucide="upload" class="h-6 w-6 text-zinc-900"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2">Upload Textbooks</h3>
+                                <p class="text-zinc-600">Easily upload and access your study materials</p>
+                            </div>
+                            <div
+                                class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
+                                <div class="h-12 w-12 bg-zinc-100 rounded-full flex items-center justify-center mb-4">
+                                    <i data-lucide="brain" class="h-6 w-6 text-zinc-900"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2">AI-Powered Learning</h3>
+                                <p class="text-zinc-600">Get personalized quizzes and lectures</p>
+                            </div>
+                            <div
+                                class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
+                                <div class="h-12 w-12 bg-zinc-100 rounded-full flex items-center justify-center mb-4">
+                                    <i data-lucide="message-square" class="h-6 w-6 text-zinc-900"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2">Interactive Sessions</h3>
+                                <p class="text-zinc-600">Engage in dynamic, AI-guided study sessions</p>
+                            </div>
+                            <div
+                                class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
+                                <div class="h-12 w-12 bg-zinc-100 rounded-full flex items-center justify-center mb-4">
+                                    <i data-lucide="file-text" class="h-6 w-6 text-zinc-900"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2">Problem Solving</h3>
+                                <p class="text-zinc-600">Step-by-step guidance through complex problems</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- How It Works Section -->
+                <section id="how-it-works" class="py-20">
+                    <div class="container mx-auto px-4 fade-up">
+                        <h2 class="text-3xl font-bold mb-12 text-center">How It Works</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                            <div class="text-center">
+                                <div
+                                    class="w-16 h-16 bg-zinc-900 text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4 mx-auto">
+                                    1</div>
+                                <h3 class="text-xl font-semibold mb-2">Upload Your Textbooks</h3>
+                                <p class="text-zinc-600">Start by uploading your study materials to StudySpace.</p>
+                            </div>
+                            <div class="text-center">
+                                <div
+                                    class="w-16 h-16 bg-zinc-900 text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4 mx-auto">
+                                    2</div>
+                                <h3 class="text-xl font-semibold mb-2">AI Analysis</h3>
+                                <p class="text-zinc-600">Our AI analyzes your textbooks to create personalized content.
+                                </p>
+                            </div>
+                            <div class="text-center">
+                                <div
+                                    class="w-16 h-16 bg-zinc-900 text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4 mx-auto">
+                                    3</div>
+                                <h3 class="text-xl font-semibold mb-2">Choose Your Study Mode</h3>
+                                <p class="text-zinc-600">Select from quizzes, lectures, or interactive sessions.</p>
+                            </div>
+                            <div class="text-center">
+                                <div
+                                    class="w-16 h-16 bg-zinc-900 text-white rounded-full flex items-center justify-center text-2xl font-bold mb-4 mx-auto">
+                                    4</div>
+                                <h3 class="text-xl font-semibold mb-2">Learn and Improve</h3>
+                                <p class="text-zinc-600">Engage with the content and track your progress over time.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Testimonials Section -->
+                <section class="bg-zinc-50 py-20">
+                    <div class="container mx-auto px-4 fade-up">
+                        <h2 class="text-3xl font-bold mb-12 text-center">What Our Users Say</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div
+                                class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                                <p class="text-zinc-600 mb-4 italic">"StudySpace revolutionized my learning experience.
+                                    The AI-generated quizzes are spot-on!"</p>
+                                <p class="font-semibold">Alex Johnson</p>
+                                <p class="text-sm text-zinc-500">Student</p>
+                            </div>
+                            <div
+                                class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                                <p class="text-zinc-600 mb-4 italic">"As a teacher, I find StudySpace incredibly helpful
+                                    for creating engaging content for my students."</p>
+                                <p class="font-semibold">Sarah Lee</p>
+                                <p class="text-sm text-zinc-500">Educator</p>
+                            </div>
+                            <div
+                                class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                                <p class="text-zinc-600 mb-4 italic">"The interactive problem-solving feature is a
+                                    game-changer. It's like having a tutor available 24/7."</p>
+                                <p class="font-semibold">Mike Chen</p>
+                                <p class="text-sm text-zinc-500">Lifelong Learner</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Pricing Section -->
+                <section id="features-detailed" class="py-20">
+                    <div class="container mx-auto px-4 fade-up">
+                        <h2 class="text-3xl font-bold mb-12 text-center">Key Features</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div
+                                class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 border border-zinc-200">
+                                <h3 class="text-2xl font-bold mb-4">Study Tools</h3>
+                                <p class="text-zinc-600 mb-6">Essential learning features</p>
+                                <ul class="mb-8 space-y-4">
+                                    <li class="flex items-center text-zinc-600">
+                                        <i data-lucide="check" class="w-5 h-5 mr-2 text-green-500 flex-shrink-0"></i>
+                                        <span>Upload and analyze textbooks</span>
+                                    </li>
+                                    <li class="flex items-center text-zinc-600">
+                                        <i data-lucide="check" class="w-5 h-5 mr-2 text-green-500 flex-shrink-0"></i>
+                                        <span>AI-generated quizzes</span>
+                                    </li>
+                                    <li class="flex items-center text-zinc-600">
+                                        <i data-lucide="check" class="w-5 h-5 mr-2 text-green-500 flex-shrink-0"></i>
+                                        <span>Basic problem-solving assistance</span>
+                                    </li>
+                                </ul>
+                                <button onclick="window.location.href='#get-started'"
+                                    class="w-full bg-zinc-900 text-white px-4 py-2 rounded-md text-lg font-medium hover:bg-zinc-800 transition-colors">
+                                    Try Now
+                                </button>
+                            </div>
+                            <!-- Interactive Features -->
+                            <div
+                                class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 border border-zinc-200 transform scale-105">
+                                <div
+                                    class="absolute top-0 right-0 bg-zinc-900 text-white px-4 py-1 rounded-bl-lg text-sm">
+                                    Popular</div>
+                                <h3 class="text-2xl font-bold mb-4">Interactive Learning</h3>
+                                <p class="text-zinc-600 mb-6">Enhanced study experience</p>
+                                <ul class="mb-8 space-y-4">
+                                    <li class="flex items-center text-zinc-600">
+                                        <i data-lucide="check" class="w-5 h-5 mr-2 text-green-500 flex-shrink-0"></i>
+                                        <span>AI-powered study sessions</span>
+                                    </li>
+                                    <li class="flex items-center text-zinc-600">
+                                        <i data-lucide="check" class="w-5 h-5 mr-2 text-green-500 flex-shrink-0"></i>
+                                        <span>Advanced AI lectures</span>
+                                    </li>
+                                    <li class="flex items-center text-zinc-600">
+                                        <i data-lucide="check" class="w-5 h-5 mr-2 text-green-500 flex-shrink-0"></i>
+                                        <span>Interactive problem solving</span>
+                                    </li>
+                                    <li class="flex items-center text-zinc-600">
+                                        <i data-lucide="check" class="w-5 h-5 mr-2 text-green-500 flex-shrink-0"></i>
+                                        <span>Progress tracking</span>
+                                    </li>
+                                </ul>
+                                <button onclick="window.location.href='#get-started'"
+                                    class="w-full bg-zinc-900 text-white px-4 py-2 rounded-md text-lg font-medium hover:bg-zinc-800 transition-colors">
+                                    Explore Features
+                            </button>
+                            </div>
+                            <!-- Community Features -->
+                            <div
+                                class="bg-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 border border-zinc-200">
+                                <h3 class="text-2xl font-bold mb-4">Community</h3>
+                                <p class="text-zinc-600 mb-6">Learn together</p>
+                                <ul class="mb-8 space-y-4">
+                                    <li class="flex items-center text-zinc-600">
+                                        <i data-lucide="check" class="w-5 h-5 mr-2 text-green-500 flex-shrink-0"></i>
+                                        <span>Study groups</span>
+                                    </li>
+                                    <li class="flex items-center text-zinc-600">
+                                        <i data-lucide="check" class="w-5 h-5 mr-2 text-green-500 flex-shrink-0"></i>
+                                        <span>Resource sharing</span>
+                                    </li>
+                                    <li class="flex items-center text-zinc-600">
+                                        <i data-lucide="check" class="w-5 h-5 mr-2 text-green-500 flex-shrink-0"></i>
+                                        <span>Discussion forums</span>
+                                    </li>
+                                    <li class="flex items-center text-zinc-600">
+                                        <i data-lucide="check" class="w-5 h-5 mr-2 text-green-500 flex-shrink-0"></i>
+                                        <span>Peer support</span>
+                                    </li>
+                                </ul>
+                                <button onclick="window.location.href='#get-started'"
+                                    class="w-full bg-zinc-900 text-white px-4 py-2 rounded-md text-lg font-medium hover:bg-zinc-800 transition-colors">
+                                    Join Community
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Call to Action Section -->
+                <section id="get-started" class="bg-zinc-900 text-white py-20">
+                    <div class="container mx-auto px-4 text-center fade-up">
+                        <h2 class="text-3xl font-bold mb-6">Ready to Transform Your Study Experience?</h2>
+                        <p class="text-xl mb-8 text-zinc-300">Start using StudySpace today and unlock the power of AI-assisted learning.</p>
+                        <a href="./hub/index.html"
+                            class="bg-white text-zinc-900 px-8 py-3 rounded-full text-lg font-medium inline-flex items-center hover:bg-zinc-100 transition-colors animate-pulse transform hover:scale-105 transition-transform duration-1000 hover:duration-300"
+                            style="animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;">
+                            Start Learning Now <i data-lucide="arrow-right" class="ml-2 h-5 w-5"></i>
+                        </a>
+                    </div>
+                </section>
+            </main>
+
+            <!-- Footer -->
+            <footer class="bg-zinc-100 py-12">
+                <div class="container mx-auto px-4">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                        <div>
+                            <h3 class="text-lg font-semibold mb-4">StudySpace</h3>
+                            <p class="text-sm text-zinc-600">Revolutionizing the way you study with AI-powered learning.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                            <ul class="space-y-2">
+                                <li><a href="#features" class="text-sm text-zinc-600 hover:text-zinc-900">Features</a>
+                                </li>
+                                <li><a href="#how-it-works" class="text-sm text-zinc-600 hover:text-zinc-900">How It
+                                        Works</a></li>
+                                <li><a href="#pricing" class="text-sm text-zinc-600 hover:text-zinc-900">Pricing</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-4">Legal</h3>
+                            <ul class="space-y-2">
+                                <li><a href="#" class="text-sm text-zinc-600 hover:text-zinc-900">Terms of Service</a>
+                                </li>
+                                <li><a href="#" class="text-sm text-zinc-600 hover:text-zinc-900">Privacy Policy</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-4">Connect</h3>
+                            <ul class="space-y-2">
+                                <li><a href="#" class="text-sm text-zinc-600 hover:text-zinc-900">Twitter</a></li>
+                                <li><a href="#" class="text-sm text-zinc-600 hover:text-zinc-900">LinkedIn</a></li>
+                                <li><a href="#" class="text-sm text-zinc-600 hover:text-zinc-900">Instagram</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-8 pt-8 border-t border-zinc-200 text-center">
+                        <p class="text-sm text-zinc-600">&copy; <span id="currentYear"></span> StudySpace. All rights
+                            reserved.</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="animations.js"></script>
+    <script src="./app.js"></script>
+</body>
+
+</html>

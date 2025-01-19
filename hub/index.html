@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudySpace Hub</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Anime.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        .study-card {
+            transform: translateY(20px);
+            opacity: 0;
+        }
+
+        .search-input:focus + .search-icon {
+            color: #18181b;
+            transform: scale(1.1) translateY(-50%);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .float-animation:hover {
+            animation: float 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-zinc-50 to-white">
+    <header class="bg-white border-b border-zinc-200 py-4 sticky top-0 z-50 opacity-0" id="header">
+        <div class="container mx-auto px-4">
+            <nav class="flex justify-between items-center">
+                <a href="/" class="text-2xl font-bold text-zinc-900 hover:text-zinc-700 transition-colors">StudySpace</a>
+                <div class="flex items-center space-x-4">
+                    <a href="/profile" class="text-sm text-zinc-600 hover:text-zinc-900 transition-colors">Profile</a>
+                    <a href="/settings" class="text-sm text-zinc-600 hover:text-zinc-900 transition-colors">Settings</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-4xl font-bold text-center mb-8 opacity-0" id="pageTitle">Choose Your Study Mode</h1>
+        
+        <div class="max-w-md mx-auto mb-8 opacity-0" id="searchContainer">
+            <div class="relative">
+                <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-zinc-400 transition-all duration-300 search-icon"></i>
+                <input
+                    type="text"
+                    placeholder="Search study modes..."
+                    class="pl-10 pr-4 py-2 w-full border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500 transition-all duration-300 search-input"
+                    id="searchInput"
+                >
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="studyModes"></div>
+
+        <p class="text-center text-zinc-600 mt-8 hidden" id="noResults">
+            No study modes found. Try a different search term.
+        </p>
+    </main>
+
+    <footer class="bg-zinc-100 py-6 mt-12">
+        <div class="container mx-auto px-4 text-center text-zinc-600">
+            <p>&copy; <span id="currentYear"></span> StudySpace. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="./app.js"></script>
+</body>
+</html>
+

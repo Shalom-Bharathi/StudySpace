@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doubt Clearing Hub - StudySpace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+
+        .fade-up { opacity: 0; transform: translateY(20px); }
+        .slide-in { opacity: 0; transform: translateX(-20px); }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .thinking {
+            position: relative;
+            display: inline-block;
+        }
+
+        .thinking::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            animation: thinking 1.5s infinite;
+            border-radius: 2px;
+        }
+
+        @keyframes thinking {
+            0% { width: 0%; left: 0; }
+            50% { width: 100%; left: 0; }
+            100% { width: 0%; left: 100%; }
+        }
+
+        .code-editor {
+            font-family: 'Fira Code', monospace;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .step-card {
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen gradient-bg relative overflow-x-hidden">
+    <div id="particles-js"></div>
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm z-50 border-b border-gray-200">
+        <div class="container mx-auto px-4 py-4">
+            <nav class="flex justify-between items-center">
+                <a href="../../hub/index.html" class="flex items-center gap-2 text-zinc-800 hover:text-zinc-600 transition-all">
+                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                    <span>Back to Hub</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 pt-24 pb-12 relative z-10">
+        <!-- Hero Section -->
+        <div class="text-center mb-12 fade-up">
+            <h1 class="text-4xl font-bold text-zinc-800 mb-4">Interactive Doubt Clearing</h1>
+            <p class="text-zinc-600 max-w-2xl mx-auto">Get step-by-step explanations with visual aids and code examples</p>
+        </div>
+
+        <!-- Main Interface -->
+        <div class="max-w-4xl mx-auto">
+            <!-- Input Section -->
+            <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 mb-8 fade-up">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="p-3 bg-blue-50 rounded-xl">
+                        <i data-lucide="help-circle" class="w-8 h-8 text-blue-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-zinc-800">Ask Your Question</h3>
+                        <p class="text-zinc-600">Voice input or type your doubt</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="relative">
+                        <textarea id="questionInput" rows="4" 
+                                class="w-full p-4 rounded-xl bg-gray-50 border border-gray-200 text-zinc-800 resize-none"
+                                placeholder="Describe your doubt in detail..."></textarea>
+                        <button id="voiceInputBtn" class="absolute right-4 bottom-4 p-2 text-zinc-500 hover:text-zinc-700 transition-all">
+                            <i data-lucide="mic" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+
+                    <!-- Subject Tags -->
+                    <div class="flex flex-wrap gap-2" id="subjectTags">
+                        <button class="px-4 py-2 rounded-full border border-gray-200 text-zinc-600 hover:bg-gray-50 transition-all"
+                                data-subject="math">Mathematics</button>
+                        <button class="px-4 py-2 rounded-full border border-gray-200 text-zinc-600 hover:bg-gray-50 transition-all"
+                                data-subject="physics">Physics</button>
+                        <button class="px-4 py-2 rounded-full border border-gray-200 text-zinc-600 hover:bg-gray-50 transition-all"
+                                data-subject="chemistry">Chemistry</button>
+                        <button class="px-4 py-2 rounded-full border border-gray-200 text-zinc-600 hover:bg-gray-50 transition-all"
+                                data-subject="biology">Biology</button>
+                        <button class="px-4 py-2 rounded-full border border-gray-200 text-zinc-600 hover:bg-gray-50 transition-all"
+                                data-subject="programming">Programming</button>
+                    </div>
+
+                    <!-- Additional Options -->
+                    <div class="flex flex-wrap gap-4">
+                        <label class="flex items-center gap-2 text-zinc-600">
+                            <input type="checkbox" id="includeVisuals" class="rounded text-blue-500">
+                            Include visual explanations
+                        </label>
+                        <label class="flex items-center gap-2 text-zinc-600">
+                            <input type="checkbox" id="includeExamples" class="rounded text-blue-500">
+                            Show practical examples
+                        </label>
+                        <label class="flex items-center gap-2 text-zinc-600">
+                            <input type="checkbox" id="stepByStep" class="rounded text-blue-500" checked>
+                            Step-by-step breakdown
+                        </label>
+                    </div>
+
+                    <button id="submitQuestion" 
+                            class="w-full bg-zinc-800 text-white py-3 px-6 rounded-xl hover:bg-zinc-700 
+                                   transition-all duration-200 flex items-center justify-center gap-2">
+                        <i data-lucide="search" class="w-5 h-5"></i>
+                        <span>Get Detailed Explanation</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Loading State (Initially Hidden) -->
+            <div id="loadingState" class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 mb-8 hidden">
+                <div class="flex flex-col items-center justify-center space-y-4">
+                    <div class="thinking">
+                        <div class="w-16 h-16 relative">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <i data-lucide="brain" class="w-12 h-12 text-blue-500"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-lg font-medium text-zinc-800">Analyzing your question...</p>
+                    <p class="text-zinc-600 text-center">Breaking it down into clear, understandable steps</p>
+                </div>
+            </div>
+
+            <!-- Results Section (Initially Hidden) -->
+            <div id="resultsSection" class="space-y-6 hidden">
+                <!-- Understanding Section -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="p-3 bg-green-50 rounded-xl">
+                            <i data-lucide="check-circle" class="w-8 h-8 text-green-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-zinc-800">Understanding Check</h3>
+                            <p class="text-zinc-600">Here's what I understood from your question</p>
+                        </div>
+                    </div>
+                    <div id="understandingText" class="prose prose-zinc max-w-none"></div>
+                </div>
+
+                <!-- Step-by-Step Explanation -->
+                <div id="stepsContainer" class="space-y-4"></div>
+
+                <!-- Additional Resources -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="p-3 bg-purple-50 rounded-xl">
+                            <i data-lucide="book-open" class="w-8 h-8 text-purple-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-zinc-800">Additional Resources</h3>
+                            <p class="text-zinc-600">Helpful links and materials for further learning</p>
+                        </div>
+                    </div>
+                    <div id="resourcesList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                </div>
+
+                <!-- Practice Questions -->
+                <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="p-3 bg-amber-50 rounded-xl">
+                            <i data-lucide="target" class="w-8 h-8 text-amber-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold text-zinc-800">Practice Questions</h3>
+                            <p class="text-zinc-600">Test your understanding</p>
+                        </div>
+                    </div>
+                    <div id="practiceQuestions" class="space-y-4"></div>
+                </div>
+
+                <!-- Feedback Section -->
+                <div class="flex justify-center gap-4">
+                    <button id="helpfulBtn" class="px-6 py-3 bg-green-50 text-green-600 rounded-xl hover:bg-green-100 transition-all flex items-center gap-2">
+                        <i data-lucide="thumbs-up" class="w-5 h-5"></i>
+                        <span>Helpful</span>
+                    </button>
+                    <button id="notHelpfulBtn" class="px-6 py-3 bg-red-50 text-red-600 rounded-xl hover:bg-red-100 transition-all flex items-center gap-2">
+                        <i data-lucide="thumbs-down" class="w-5 h-5"></i>
+                        <span>Not Helpful</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <script src="./app.js"></script>
+</body>
+</html>

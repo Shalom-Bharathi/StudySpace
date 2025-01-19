@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problem Solving Companion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Tesseract.js for image to text -->
+    <script src='https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js'></script>
+    <style>
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .chat-bubble {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .chat-bubble.user {
+            transform: translateX(20px);
+        }
+
+        .thinking-dots::after {
+            content: '...';
+            animation: thinking 1.5s infinite;
+        }
+
+        @keyframes thinking {
+            0% { content: '.'; }
+            33% { content: '..'; }
+            66% { content: '...'; }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="bg-zinc-50 min-h-screen">
+    <div class="mb-6 m-2">
+        <a href="../../hub/index.html" class="inline-flex items-center justify-center px-4 py-2 bg-zinc-800 text-white rounded-full hover:bg-zinc-700">
+            <i data-lucide="home" class="w-5 h-5"></i>
+        </a>
+    </div>
+
+    <div class="container mx-auto px-4 py-8">
+        <div class="text-center mb-12 fade-in">
+            <h1 class="text-4xl font-bold text-zinc-800 mb-4">Problem Solving Companion</h1>
+            <p class="text-zinc-600 max-w-2xl mx-auto">
+                Let me guide you through your problem step by step. 
+                I won't give you the answer, but I'll help you discover it yourself.
+            </p>
+        </div>
+
+        <div class="max-w-4xl mx-auto">
+            <!-- Problem Input Section -->
+            <div class="bg-white rounded-xl shadow-lg p-8 mb-8 fade-in">
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-zinc-700 mb-2">
+                            What problem are you working on?
+                        </label>
+                        <textarea id="problemText" rows="4" 
+                                class="w-full p-4 rounded-lg border border-zinc-200 focus:ring-2 focus:ring-zinc-500"
+                                placeholder="Type your problem here..."></textarea>
+                    </div>
+
+                    <div class="flex items-center justify-center w-full">
+                        <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-zinc-300 border-dashed rounded-lg cursor-pointer hover:bg-zinc-50">
+                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                <i data-lucide="upload" class="w-8 h-8 mb-3 text-zinc-400"></i>
+                                <p class="mb-2 text-sm text-zinc-500">
+                                    <span class="font-semibold">Click to upload</span> or drag and drop
+                                </p>
+                                <p class="text-xs text-zinc-500">Image of your problem (optional)</p>
+                            </div>
+                            <input id="problemImage" type="file" class="hidden" accept="image/*" />
+                        </label>
+                    </div>
+
+                    <div class="flex justify-between items-center">
+                        <button id="voiceToggle" 
+                                class="inline-flex items-center px-4 py-2 text-zinc-700 rounded-lg hover:bg-zinc-100">
+                            <i data-lucide="volume-2" class="w-5 h-5 mr-2"></i>
+                            <span>Voice Feedback</span>
+                        </button>
+
+                        <button id="submitProblem" 
+                                class="inline-flex items-center px-6 py-3 bg-zinc-800 text-white rounded-lg hover:bg-zinc-700">
+                            <i data-lucide="send" class="w-5 h-5 mr-2"></i>
+                            <span>Let's Solve This</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Section -->
+            <div id="chatSection" class="space-y-4 hidden">
+                <div id="chatMessages" class="space-y-4">
+                    <!-- Messages will be inserted here -->
+                </div>
+
+                <!-- User Input -->
+                <div class="bg-white rounded-xl shadow-lg p-4 space-y-4">
+                    <textarea id="userResponse" rows="2" 
+                            class="w-full p-3 rounded-lg border border-zinc-200 focus:ring-2 focus:ring-zinc-500"
+                            placeholder="Your thoughts..."></textarea>
+                    <div class="flex justify-end">
+                        <button id="sendResponse" 
+                                class="inline-flex items-center px-4 py-2 bg-zinc-800 text-white rounded-lg hover:bg-zinc-700">
+                            <i data-lucide="send" class="w-4 h-4 mr-2"></i>
+                            <span>Send</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./app.js"></script>
+</body>
+</html> 

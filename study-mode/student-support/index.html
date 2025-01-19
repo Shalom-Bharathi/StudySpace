@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Support & Therapy - StudySpace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+
+        .fade-up { opacity: 0; transform: translateY(20px); }
+        .slide-in { opacity: 0; transform: translateX(-20px); }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Custom styling for the Eleven Labs widget */
+        elevenlabs-convai {
+            --convai-window-height: 600px !important;
+            --convai-window-width: 400px !important;
+            position: fixed !important;
+            bottom: 20px !important;
+            right: 20px !important;
+            z-index: 1000 !important;
+        }
+
+        .arrow-pointer {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen gradient-bg relative overflow-x-hidden">
+    <div id="particles-js"></div>
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm z-50 border-b border-gray-200">
+        <div class="container mx-auto px-4 py-4">
+            <nav class="flex justify-between items-center">
+                <a href="../../hub/index.html" class="flex items-center gap-2 text-zinc-800 hover:text-zinc-600 transition-all">
+                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                    <span>Back to Hub</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 pt-24 pb-12 relative z-10">
+        <!-- Hero Section -->
+        <div class="text-center mb-12 fade-up">
+            <h1 class="text-4xl font-bold text-zinc-800 mb-4">Student Support Hub</h1>
+            <p class="text-zinc-600 max-w-2xl mx-auto">Your safe space for guidance and support</p>
+        </div>
+
+        <!-- Feature Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <!-- Common Challenges -->
+            <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 fade-up hover:shadow-xl transition-all">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="p-3 bg-blue-50 rounded-xl">
+                        <i data-lucide="heart-handshake" class="w-8 h-8 text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-zinc-800">Common Challenges</h3>
+                </div>
+                <ul class="space-y-3 text-zinc-600">
+                    <li class="flex items-center gap-2">
+                        <i data-lucide="check-circle" class="w-5 h-5 text-blue-500"></i>
+                        Academic pressure & stress
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <i data-lucide="check-circle" class="w-5 h-5 text-blue-500"></i>
+                        Time management struggles
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <i data-lucide="check-circle" class="w-5 h-5 text-blue-500"></i>
+                        Social anxiety
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <i data-lucide="check-circle" class="w-5 h-5 text-blue-500"></i>
+                        Performance anxiety
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Support Network -->
+            <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 fade-up hover:shadow-xl transition-all">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="p-3 bg-purple-50 rounded-xl">
+                        <i data-lucide="users" class="w-8 h-8 text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-zinc-800">Support Network</h3>
+                </div>
+                <ul class="space-y-3 text-zinc-600">
+                    <li class="flex items-center gap-2">
+                        <i data-lucide="check-circle" class="w-5 h-5 text-purple-500"></i>
+                        Friends and family
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <i data-lucide="check-circle" class="w-5 h-5 text-purple-500"></i>
+                        School counselors
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <i data-lucide="check-circle" class="w-5 h-5 text-purple-500"></i>
+                        Teachers and mentors
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <i data-lucide="check-circle" class="w-5 h-5 text-purple-500"></i>
+                        Mental health professionals
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Self-Help Tips -->
+            <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 fade-up hover:shadow-xl transition-all">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="p-3 bg-green-50 rounded-xl">
+                        <i data-lucide="sparkles" class="w-8 h-8 text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-zinc-800">Positive Steps</h3>
+                </div>
+                <ul class="space-y-3 text-zinc-600">
+                    <li class="flex items-center gap-2">
+                        <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                        Practice self-care daily
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                        Maintain a routine
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                        Set realistic goals
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                        Stay physically active
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Important Notice -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 mb-12 fade-up">
+            <div class="flex items-center gap-4 mb-6">
+                <div class="p-3 bg-amber-50 rounded-xl">
+                    <i data-lucide="info" class="w-8 h-8 text-amber-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-zinc-800">Important Notice</h3>
+            </div>
+            <p class="text-zinc-600">
+                While our AI therapist is here to provide support and guidance, it's not a replacement for professional mental health care. 
+                If you're experiencing severe distress or having thoughts of self-harm, please reach out to professional help immediately. 
+                Remember, seeking help is a sign of strength, not weakness.
+            </p>
+        </div>
+    </main>
+
+    <!-- Arrow pointing to Eleven Labs Widget -->
+    <div class="fixed bottom-16 right-32 z-50 text-zinc-800 arrow-pointer">
+        <div class="flex items-center gap-3 bg-white shadow-lg px-4 py-2 rounded-xl border border-gray-200">
+            <span class="text-sm font-medium">Click here to consult with an AI Therapist</span>
+            <i data-lucide="arrow-down-right" class="w-5 h-5"></i>
+        </div>
+    </div>
+
+    <!-- Eleven Labs Widget -->
+    <elevenlabs-convai agent-id="0i3BOlRoolQX6vqZZVqN"></elevenlabs-convai>
+
+    <!-- Scripts -->
+    <script src="https://elevenlabs.io/convai-widget/index.js" async type="text/javascript"></script>
+    <script src="./app.js"></script>
+</body>
+</html> 
